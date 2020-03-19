@@ -17,6 +17,11 @@
     <version>1.0-SNAPSHOT</version>
   </dependency>
 
+  <dependency>
+    <groupId>com.fsq.rpc</groupId>
+    <artifactId>rpc-center</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </dependency>
 
 </dependencies>
 
