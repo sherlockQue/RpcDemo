@@ -81,20 +81,22 @@ public class NettyClient implements Client {
 
     }
 
+    /**
+     * 反射调用方法，无注册中心
+     * @return
+     */
     public Object send() {
-
-//    HelloService helloService = (HelloService) Proxy
-//        .newProxyInstance(HelloService.class.getClassLoader(), new Class[]{HelloService.class},
-//            new ClientProxy(channel,shareData));
-
         System.out.println(interfaceclass);
-
         return Proxy.newProxyInstance(interfaceclass.getClassLoader(), new Class[]{interfaceclass}, new ClientProxy(channel, shareData));
 
     }
 
+    /**
+     *  反射调用方法，有注册中心
+     * @param interfaceName
+     * @return
+     */
     public Object send(String interfaceName) {
-
 
         try {
             if (interfaceName != null && interfaceName != "") {

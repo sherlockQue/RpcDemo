@@ -104,16 +104,20 @@ public class NettyServerHandle extends SimpleChannelInboundHandler<Object> {
    */
   private Object readHandle(RpcRequest rpcRequest) {
 
-    try {
+
       // 实现ioc可将bean注册
       BeanContainer beanContainer = BeanContainer.getInstance();
 
-      Set<?> clazz = beanContainer.getClassesBySuper(Class.forName(rpcRequest.getClassName()));
-      Iterator<?> it = clazz.iterator();
-      while (it.hasNext()) {
-        Class<?> c = (Class<?>) it.next();
+//      Set<?> clazz = beanContainer.getClassesBySuper(Class.forName(rpcRequest.getClassName()));
+//      Iterator<?> it = clazz.iterator();
+//      while (it.hasNext()) {
+//        Class<?> c = (Class<?>) it.next();
+//
+//        //实例化
+//        Object seInterface = c.getConstructor().newInstance();
 
-        Object seInterface = c.getConstructor().newInstance();
+      //根据接口名字从bean中拿到具体实例
+      Object seInterface = beanContainer.getBeanClass(rpcRequest.getClassName());
 
         ServerProxy serverProxy = new ServerProxy(seInterface);
         ProxyUtil proxyUtil = new ProxyUtil(serverProxy);
@@ -126,11 +130,8 @@ public class NettyServerHandle extends SimpleChannelInboundHandler<Object> {
             rpcRequest.getParameterTypes());
 
         return result;
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return null;
+
+
   }
 
 }

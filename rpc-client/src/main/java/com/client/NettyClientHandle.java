@@ -31,7 +31,6 @@ public class NettyClientHandle extends ChannelDuplexHandler {
 
     }
   }
-
   @Override
   public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
 

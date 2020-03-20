@@ -8,6 +8,7 @@ import common.ioc.config.annotation.Service;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -136,4 +137,27 @@ public class BeanContainer {
   public boolean isLoadBean() {
     return isLoadBean;
   }
+
+  /**
+   * 获得bean实例
+   * @param interfaceName 接口
+   * @return
+   */
+  public Object getBeanClass(String interfaceName) {
+
+      Set<Object> classSet = getBeans();
+      Iterator it = classSet.iterator();
+      while (it.hasNext()) {
+        Object cass = it.next();
+        Class<?> o =  cass.getClass();
+        for(Class<?> cl : o.getInterfaces()){
+          if(cl.getName().equals(interfaceName)){
+            return cass;
+          }
+        }
+      }
+
+      return null;
+  }
+
 }

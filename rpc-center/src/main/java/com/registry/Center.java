@@ -139,7 +139,9 @@ public class Center implements RegistryCenter {
               CreateMode.PERSISTENT);
           System.out.println("create2");
         }
-
+      /**
+       * 创建服务节点
+       */
         if (zk.exists(path, false) == null) {
           zk.create(path, "".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL,
               (i, s, o, s1) -> {
@@ -147,6 +149,11 @@ public class Center implements RegistryCenter {
                   System.out.println("创建节点成功" + path);
                   try {
                     List<String> node = zk.getChildren(BASE_PATH + "/" + serverName + "/provider", new Watcher() {
+
+                      /**
+                       * 实现节点监听
+                       * @param watchedEvent
+                       */
                       @Override
                       public void process(WatchedEvent watchedEvent) {
                         if (watchedEvent.getType() == Event.EventType.NodeChildrenChanged) {

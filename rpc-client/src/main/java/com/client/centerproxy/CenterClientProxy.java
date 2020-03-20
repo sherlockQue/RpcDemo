@@ -10,6 +10,7 @@ import java.util.Map;
 
 /**
  * @author fsq
+ * 通过注册中心查找可提供服务的服务器
  */
 public class CenterClientProxy {
 

@@ -4,6 +4,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+/**
+ * @author fsq
+ * 封装动态代理实现
+ */
 public class ProxyUtil {
 
   private ServerProxy serverProxy;
@@ -21,11 +25,11 @@ public class ProxyUtil {
   }
 
   /**
-   * 调用方法
+   * 调用方法,调用由客户端请求的方法，
    * @param methodName  方法名
    * @param parameters  参数列表
    * @param parameterTypes 参数类型
-   * @return
+   * @return 返回指定方法的返回值
    */
   public Object invokeMethod( String methodName,Object[] parameters , Class<?>[] parameterTypes) {
 
