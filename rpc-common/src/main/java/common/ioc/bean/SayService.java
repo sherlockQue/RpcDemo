@@ -5,5 +5,5 @@ import common.ioc.config.annotation.Service;
 
 public interface SayService {
 
-  void  rap();
+  void  rap(String name);
 }

@@ -14,9 +14,6 @@ public class RpcClientProxy {
     return (T) client.send();
   }
 
-  public <T> T create(String interfaceName){
-    Client client =new NettyClient(addressName);
-    return (T) client.send();
-  }
+
 
 }

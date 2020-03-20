@@ -95,13 +95,21 @@ public class NettyClient implements Client {
 
     public Object send(String interfaceName) {
 
-        try {
-            Class<?> clazz = Class.forName(interfaceName);
-            return Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, new ClientProxy(channel, shareData));
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        try {
+            if (interfaceName != null && interfaceName != "") {
+
+                System.out.println("serverInterface: "+interfaceName);
+                Class<?> clazz = Class.forName(interfaceName);
+                return Proxy
+                    .newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, new ClientProxy(channel, shareData));
+
+            }
+            } catch(ClassNotFoundException e){
+            System.out.println("error：ClassNotFoundException，没有该服务接口");
+                e.printStackTrace();
+            }
+
         return null;
     }
 
