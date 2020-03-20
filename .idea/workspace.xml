@@ -28,14 +28,14 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="class" value="11" />
-          <entry key="java" value="167" />
+          <entry key="java" value="168" />
           <entry key="xml" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="11" />
-          <entry key="JAVA" value="167" />
+          <entry key="JAVA" value="168" />
           <entry key="XML" value="16" />
         </counts>
       </usages-collector>
@@ -57,47 +57,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rpc-center/src/main/java/com/registry/Center.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="62">
-              <caret line="96" column="65" lean-forward="true" selection-start-line="96" selection-start-column="65" selection-end-line="96" selection-end-column="65" />
+            <state relative-caret-position="654">
+              <caret line="126" column="61" lean-forward="true" selection-start-line="126" selection-start-column="61" selection-end-line="126" selection-end-column="61" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;field#registryAddress#0;class#Center#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/rpc-server/src/main/java/com/server/NettyServer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="81" column="9" selection-start-line="81" selection-start-column="9" selection-end-line="81" selection-end-column="9" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rpc-center/src/main/java/com/registry/RegistryCenter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="38">
-              <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rpc-server/src/main/java/MainServer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="6" column="41" lean-forward="true" selection-start-line="6" selection-start-column="41" selection-end-line="6" selection-end-column="41" />
-              <folding>
-                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -112,6 +79,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -185,6 +155,7 @@
     <option name="width" value="975" />
     <option name="height" value="1047" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -200,57 +171,37 @@
             <path>
               <item name="rpcdemo" type="b2602c69:ProjectViewProjectNode" />
               <item name="rpcdemo" type="462c0819:PsiDirectoryNode" />
-              <item name="rpc-server" type="462c0819:PsiDirectoryNode" />
+              <item name="rpc-center" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="rpcdemo" type="b2602c69:ProjectViewProjectNode" />
               <item name="rpcdemo" type="462c0819:PsiDirectoryNode" />
-              <item name="rpc-server" type="462c0819:PsiDirectoryNode" />
+              <item name="rpc-center" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="rpcdemo" type="b2602c69:ProjectViewProjectNode" />
               <item name="rpcdemo" type="462c0819:PsiDirectoryNode" />
-              <item name="rpc-server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rpcdemo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="rpcdemo" type="462c0819:PsiDirectoryNode" />
-              <item name="rpc-server" type="462c0819:PsiDirectoryNode" />
+              <item name="rpc-center" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="rpcdemo" type="b2602c69:ProjectViewProjectNode" />
               <item name="rpcdemo" type="462c0819:PsiDirectoryNode" />
-              <item name="rpc-server" type="462c0819:PsiDirectoryNode" />
+              <item name="rpc-center" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="rpcdemo" type="b2602c69:ProjectViewProjectNode" />
               <item name="rpcdemo" type="462c0819:PsiDirectoryNode" />
-              <item name="rpc-server" type="462c0819:PsiDirectoryNode" />
+              <item name="rpc-center" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="allservice" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rpcdemo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="rpcdemo" type="462c0819:PsiDirectoryNode" />
-              <item name="rpc-server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="proxy" type="462c0819:PsiDirectoryNode" />
+              <item name="registry" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -263,7 +214,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1584607778815" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1584668945445" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -345,16 +296,15 @@
       <workItem from="1584068217996" duration="2080000" />
       <workItem from="1584075010199" duration="9248000" />
       <workItem from="1584085435628" duration="2843000" />
-      <workItem from="1584327476831" duration="71839000" />
+      <workItem from="1584327476831" duration="72895000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86010000" />
+    <option name="totallyTimeSpent" value="87066000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25746268" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -365,14 +315,14 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.24295011" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" visible="true" weight="0.24321389" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.29934925" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.329718" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.1691974" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="9" sideWeight="0.50053304" side_tool="true" visible="true" weight="0.24321389" />
       <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.329718" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -835,13 +785,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rpc-center/src/main/java/com/registry/Center.java">
+    <entry file="file://$PROJECT_DIR$/rpc-server/src/main/java/com/server/NettyServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62">
-          <caret line="96" column="65" lean-forward="true" selection-start-line="96" selection-start-column="65" selection-end-line="96" selection-end-column="65" />
+        <state relative-caret-position="278">
+          <caret line="81" selection-start-line="81" selection-end-line="81" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="docComment;field#registryAddress#0;class#Center#0" />
           </folding>
         </state>
       </provider>
@@ -863,12 +812,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rpc-server/src/main/java/com/server/NettyServer.java">
+    <entry file="file://$PROJECT_DIR$/rpc-center/src/main/java/com/registry/Center.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="81" column="9" selection-start-line="81" selection-start-column="9" selection-end-line="81" selection-end-column="9" />
+        <state relative-caret-position="654">
+          <caret line="126" column="61" lean-forward="true" selection-start-line="126" selection-start-column="61" selection-end-line="126" selection-end-column="61" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="docComment;field#registryAddress#0;class#Center#0" />
           </folding>
         </state>
       </provider>
