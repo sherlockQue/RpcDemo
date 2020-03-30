@@ -1,11 +1,10 @@
 package com.server;
 
 import com.registry.Center;
-import com.server.allservice.HelloServiceImpl;
-import common.ioc.bean.HelloService;
-import common.ioc.config.Ioc;
-import common.ioc.config.annotation.Service;
-import common.ioc.core.BeanContainer;
+
+import com.server.ioc.config.Ioc;
+import com.server.ioc.config.annotation.Service;
+import com.server.ioc.core.BeanContainer;
 import common.util.Serializer.JsonSerializer;
 import common.util.codec.RpcDecoder;
 import common.util.codec.RpcEncoder;
@@ -49,6 +48,7 @@ public class NettyServer implements Server {
   /**
    * 服务启动器
    */
+  @Override
   public void start() {
 
     NioEventLoopGroup boos = new NioEventLoopGroup();
@@ -94,9 +94,12 @@ public class NettyServer implements Server {
   /**
    * 加载bean
    */
+  @Override
   public void startIoc() {
     BeanContainer beanContainer = BeanContainer.getInstance();
     beanContainer.loadBeans("com.server.allservice");
+    beanContainer.loadBeans("com.server.proxy");
+    System.out.println("bean加载成功");
     new Ioc().doIoc();
 
     Set set = beanContainer.getClassesByAnnotation(Service.class);

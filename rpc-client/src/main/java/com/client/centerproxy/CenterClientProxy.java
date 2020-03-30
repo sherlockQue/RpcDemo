@@ -1,9 +1,8 @@
 package com.client.centerproxy;
 
-import com.client.Client;
+
 import com.client.NettyClient;
 import com.registry.Center;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +16,7 @@ public class CenterClientProxy {
 
   private String registryAddress;
   private Center center;
-  private Map<String, List<String>> nodeMap;
+  private volatile Map<String, List<String>> nodeMap;
 
   public CenterClientProxy(String registryAddress) {
     this.registryAddress = registryAddress;
@@ -25,6 +24,7 @@ public class CenterClientProxy {
     nodeMap = center.getServer();
 
     new Thread(new Runnable() {
+      @Override
       public void run() {
         while (true) {
           if (center.discover()) {
@@ -37,14 +37,15 @@ public class CenterClientProxy {
   }
 
   public Object invoke(String serverName) {
-    if (nodeMap.containsKey(serverName)) {
 
 
+    if(nodeMap.containsKey(serverName)) {
       List<String> serverPort = nodeMap.get(serverName);
-      int index =getRamdonServer(serverPort.size());
+      int index = center.getRamdonServer(serverPort.size());
 
       String[] po = serverPort.get(index).split(":");
-      System.out.println("提供服务端口: "+po[0]+":"+po[1]);
+      System.out.println("提供服务端口: " + po[0] + ":" + po[1]);
+
       NettyClient client = new NettyClient(serverPort.get(index));
 
       return client.send(serverName);
@@ -52,14 +53,6 @@ public class CenterClientProxy {
     return null;
   }
 
-  /**
-   * 随机法实现负载均衡
-   * @param size
-   * @return
-   */
-  private int getRamdonServer(int size){
-    return new java.util.Random().nextInt(size);
-  }
 
 
 }

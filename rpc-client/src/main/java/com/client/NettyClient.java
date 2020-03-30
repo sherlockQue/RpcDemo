@@ -33,7 +33,6 @@ public class NettyClient implements Client {
     private Class<?> interfaceclass;
     private Channel channel;
 
-
     public NettyClient(String addressName, Class<?> interfaceclass) {
 
         this.addressName = addressName;
@@ -85,6 +84,7 @@ public class NettyClient implements Client {
      * 反射调用方法，无注册中心
      * @return
      */
+    @Override
     public Object send() {
         System.out.println(interfaceclass);
         return Proxy.newProxyInstance(interfaceclass.getClassLoader(), new Class[]{interfaceclass}, new ClientProxy(channel, shareData));

@@ -26,6 +26,7 @@ public class ClientProxy implements InvocationHandler {
   /**
    * ,获取调用方法的形参，参数类型，方法名
    */
+  @Override
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
     RpcRequest rpcRequest = new RpcRequest();

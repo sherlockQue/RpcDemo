@@ -24,7 +24,7 @@ public class Center implements RegistryCenter {
   /**
    * 保存服务端register的服务
    */
-  private volatile   Map<String, List<String>> nodeMap;
+  private volatile Map<String, List<String>> nodeMap;
 
 
   public ZooKeeper zk = null;
@@ -61,7 +61,9 @@ public class Center implements RegistryCenter {
         }
 
       });
-      //循环监听节点
+
+      // 循环监听节点
+
       zk.getChildren(BASE_PATH, true);
 
       /**
@@ -139,9 +141,9 @@ public class Center implements RegistryCenter {
               CreateMode.PERSISTENT);
           System.out.println("create2");
         }
-      /**
-       * 创建服务节点
-       */
+        /**
+         * 创建服务节点
+         */
         if (zk.exists(path, false) == null) {
           zk.create(path, "".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL,
               (i, s, o, s1) -> {
@@ -163,7 +165,7 @@ public class Center implements RegistryCenter {
                       }
                     });
 
-                      nodeMap = getData();
+                    nodeMap = getData();
 
                   } catch (KeeperException e) {
                     e.printStackTrace();
@@ -220,12 +222,12 @@ public class Center implements RegistryCenter {
   /**
    * 客户端获取服务列表
    *
-   * @return Map<interfaceName       ,       List   <   address>>
+   * @return Map<interfaceName               ,               List       <       address>>
    */
   @Override
   public Map<String, List<String>> getServer() {
 
-      nodeMap = getData();
+    nodeMap = getData();
 
     return nodeMap;
   }
@@ -236,10 +238,20 @@ public class Center implements RegistryCenter {
   @Override
   public Boolean discover() {
 
-
-    if (nodeMap == null){
+    if (nodeMap == null) {
       return true;
     }
-      return false;
+    return false;
+  }
+
+
+  /**
+   * 随机法实现负载均衡
+   */
+  public int getRamdonServer(int size) {
+    if (size == 1) {
+      return 0;
+    }
+    return new java.util.Random().nextInt(size);
   }
 }

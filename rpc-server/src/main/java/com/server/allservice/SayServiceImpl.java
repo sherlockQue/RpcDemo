@@ -1,11 +1,12 @@
 package com.server.allservice;
 
-import common.ioc.bean.SayService;
-import common.ioc.config.annotation.Service;
+import com.comon.service.SayService;
+import com.server.ioc.config.annotation.Service;
 
 @Service
 public class SayServiceImpl implements SayService {
 
+  @Override
   public void rap(String name) {
 
     System.out.println(name+" yamy");

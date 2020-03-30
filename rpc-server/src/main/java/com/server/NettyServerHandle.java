@@ -1,10 +1,9 @@
 package com.server;
 
+import com.server.ioc.core.BeanContainer;
 import com.server.proxy.ServerProxy;
 import com.server.proxy.ProxyUtil;
-import common.ioc.bean.HelloService;
-import com.server.allservice.HelloServiceImpl;
-import common.ioc.core.BeanContainer;
+
 import common.util.protocol.RpcRequest;
 import common.util.protocol.RpcResponse;
 import io.netty.channel.Channel;
@@ -98,28 +97,21 @@ public class NettyServerHandle extends SimpleChannelInboundHandler<Object> {
 
   /**
    * 调用相对应的方法
-   *
    * @param rpcRequest 请求信息
    * @return 返回结果
    */
   private Object readHandle(RpcRequest rpcRequest) {
 
 
-      // 实现ioc可将bean注册
+
       BeanContainer beanContainer = BeanContainer.getInstance();
 
-//      Set<?> clazz = beanContainer.getClassesBySuper(Class.forName(rpcRequest.getClassName()));
-//      Iterator<?> it = clazz.iterator();
-//      while (it.hasNext()) {
-//        Class<?> c = (Class<?>) it.next();
-//
-//        //实例化
-//        Object seInterface = c.getConstructor().newInstance();
 
       //根据接口名字从bean中拿到具体实例
       Object seInterface = beanContainer.getBeanClass(rpcRequest.getClassName());
 
         ServerProxy serverProxy = new ServerProxy(seInterface);
+
         ProxyUtil proxyUtil = new ProxyUtil(serverProxy);
         Object m = proxyUtil
             .invoke(serverProxy.getClazz().getClass(), serverProxy.getClazz().getClass().getInterfaces());
