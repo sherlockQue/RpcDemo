@@ -104,18 +104,21 @@ public class Center implements RegistryCenter {
 
   }
 
+  @Override
+  public void register(List serviceList, String address) {
+    for(Object serverName : serviceList) {
+      registerHandle((String) serverName, address);
+    }
+  }
+
   /**
    * 注册方法
    *
-   * @param serverName 服务名字，例如："commom.ioc.bean.HelloService."
-   * @param address 服务器地址，例如 "127.0.0.1:8585"
+   * @param serviceList 接口集合
+   * @param address 服务器地址
+   *
    */
-  @Override
-  public void register(String serverName, String address) {
 
-    registerHandle(serverName, address);
-
-  }
 
   /**
    * 注册方法处理器，参数解析参考注册方法

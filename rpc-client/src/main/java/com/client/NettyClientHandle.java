@@ -1,14 +1,11 @@
 package com.client;
 
-import common.util.protocol.RpcRequest;
+
 import common.util.protocol.RpcResponse;
 import common.util.sharedata.ShareData;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author fsq
@@ -27,7 +24,6 @@ public class NettyClientHandle extends ChannelDuplexHandler {
     if (o instanceof RpcResponse) {
 
       shareData.addRpcResponse(((RpcResponse) o).getRequestId(),(RpcResponse) o);
-     // System.out.println(((RpcResponse) o).getResult());
 
     }
   }

@@ -20,6 +20,7 @@ public class ServerProxy<T> implements InvocationHandler {
   }
 
 
+  @Override
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
    Object i = method.invoke(clazz,args);

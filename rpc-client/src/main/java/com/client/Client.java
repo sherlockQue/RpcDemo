@@ -5,5 +5,5 @@ public interface Client {
 
   void connect() throws InterruptedException;
 
-  Object send();
+
 }

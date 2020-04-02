@@ -1,7 +1,7 @@
 package com.client.ioc.core;
 
 
-import com.client.ioc.ClassUtil;
+import common.util.ClassUtil;
 import com.client.ioc.config.annotation.Component;
 import com.client.ioc.config.annotation.Controller;
 import com.client.ioc.config.annotation.Service;
@@ -21,7 +21,8 @@ import java.util.stream.Collectors;
  */
 public class BeanContainer {
 
-  private BeanContainer(){}
+  private BeanContainer() {
+  }
 
   private static BeanContainer beanContainer = new BeanContainer();
 
@@ -102,62 +103,32 @@ public class BeanContainer {
   }
 
   /**
-   * 是否加载Bean
-   */
-  private boolean isLoadBean = false;
-
-  /**
    * 加载bean的注解列表,并实例化放到beanMap里面
    */
   private static final List<Class<? extends Annotation>> BEAN_ANNOTATION
       = Arrays.asList(Component.class, Service.class, Controller.class);
 
-  public void loadBeans(String basePackage) {
-    if (isLoadBean()) {
-      System.out.println("bean已经加载");
-      return;
-    }
+  public void loadBeans() {
 
-    Set<Class<?>> classSet = ClassUtil.getPackageClass(basePackage);
-    classSet.stream()
-        .filter(clz -> {
-          for (Class<? extends Annotation> annotation : BEAN_ANNOTATION) {
-            if (clz.isAnnotationPresent(annotation)) {
-              return true;
+    String[] basePackages = {"com.client.proxy", "com.client.controller", "com.client.centerproxy"};
+
+    for (String basePackage : basePackages) {
+      Set<Class<?>> classSet = ClassUtil.getPackageClass(basePackage);
+      classSet.stream()
+          .filter(clz -> {
+            for (Class<? extends Annotation> annotation : BEAN_ANNOTATION) {
+              if (clz.isAnnotationPresent(annotation)) {
+                return true;
+              }
             }
-          }
-          return false;
-        })
-        .forEach(clz -> beanMap.put(clz, ClassUtil.newInstance(clz)));
-    isLoadBean = true;
+            return false;
+          })
+          .forEach(clz -> beanMap.put(clz, ClassUtil.newInstance(clz)));
+
+    }
   }
 
-  /**
-   * 是否加载Bean
-   */
-  public boolean isLoadBean() {
-    return isLoadBean;
-  }
 
-  /**
-   * 获得bean实例
-   * @param interfaceName 接口
-   * @return
-   */
-  public Object getBeanClass(String interfaceName) {
 
-      Set<Object> classSet = getBeans();
-      Iterator it = classSet.iterator();
-      while (it.hasNext()) {
-        Object cass = it.next();
-        Class<?> o =  cass.getClass();
-        for(Class<?> cl : o.getInterfaces()){
-          if(cl.getName().equals(interfaceName)){
-            return cass;
-          }
-        }
-      }
-      return null;
-  }
 
 }

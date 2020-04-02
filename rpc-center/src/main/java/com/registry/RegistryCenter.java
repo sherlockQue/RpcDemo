@@ -10,7 +10,7 @@ public interface RegistryCenter <T>{
 
   void start();
 
-  void register(String serverName,String address);
+  void register(List serviceList,String address);
 
   T getServer();
 

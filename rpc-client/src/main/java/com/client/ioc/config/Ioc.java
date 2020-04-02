@@ -1,8 +1,8 @@
 package com.client.ioc.config;
 
 
-import com.client.centerproxy.CenterClientProxy;
-import com.client.ioc.ClassUtil;
+import com.client.proxy.RpcClientProxy;
+import common.util.ClassUtil;
 import com.client.ioc.config.annotation.Autowired;
 import com.client.ioc.config.annotation.InterService;
 import com.client.ioc.core.BeanContainer;
@@ -13,13 +13,15 @@ public class Ioc {
 
   private BeanContainer beanContainer;
 
+  public Ioc(){
+    beanContainer = BeanContainer.getInstance();
+  }
   /**
    * 执行Ioc
    */
   public void doIoc() {
     //遍历Bean容器中所有的Bean
 
-    beanContainer = BeanContainer.getInstance();
     for (Class<?> clz : beanContainer.getClasses()) {
       final Object targetBean = beanContainer.getBean(clz);
       Field[] fields = clz.getDeclaredFields();
@@ -34,7 +36,6 @@ public class Ioc {
             ClassUtil.setField(field, targetBean, fieldValue);
           }else {
             fieldValue = getClassInstance(fieldClass);
-
             if (null != fieldValue) {
               ClassUtil.setField(field, targetBean, fieldValue);
             } else {
@@ -51,9 +52,7 @@ public class Ioc {
    */
   private Object initInterService(Class<?> fieldClass ){
 
-    CenterClientProxy centerClientProxy = new CenterClientProxy("127.0.0.1:2181");
-
-    return centerClientProxy.invoke(fieldClass.getName());
+    return ((RpcClientProxy ) beanContainer.getBean(RpcClientProxy.class)).create(fieldClass);
   }
 
   /**

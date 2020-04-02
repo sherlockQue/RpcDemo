@@ -1,9 +1,9 @@
 package com.server.ioc.config;
 
 
-import com.server.ioc.ClassUtil;
 import com.server.ioc.config.annotation.Autowired;
 import com.server.ioc.core.BeanContainer;
+import common.util.ClassUtil;
 import java.lang.reflect.Field;
 import java.util.Optional;
 

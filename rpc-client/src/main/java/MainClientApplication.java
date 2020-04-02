@@ -11,7 +11,7 @@ public class MainClientApplication {
   public static void main(String []args){
 
     BeanContainer beanContainer =BeanContainer.getInstance();
-    beanContainer.loadBeans("com.client.controller");
+    beanContainer.loadBeans();
     new Ioc().doIoc();
     MainClient mainClient = (MainClient)beanContainer.getBean(MainClient.class);
     mainClient.test();

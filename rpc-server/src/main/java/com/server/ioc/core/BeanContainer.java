@@ -1,11 +1,13 @@
 package com.server.ioc.core;
 
 
-import com.server.ioc.ClassUtil;
 import com.server.ioc.config.annotation.Component;
 import com.server.ioc.config.annotation.Controller;
+import com.server.ioc.config.annotation.InterService;
 import com.server.ioc.config.annotation.Service;
+import common.util.ClassUtil;
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -100,10 +102,6 @@ public class BeanContainer {
         .collect(Collectors.toSet());
   }
 
-  /**
-   * 是否加载Bean
-   */
-  private boolean isLoadBean = false;
 
   /**
    * 加载bean的注解列表,并实例化放到beanMap里面
@@ -111,31 +109,28 @@ public class BeanContainer {
   private static final List<Class<? extends Annotation>> BEAN_ANNOTATION
       = Arrays.asList(Component.class, Service.class, Controller.class);
 
-  public void loadBeans(String basePackage) {
-//    if (isLoadBean()) {
-//      System.out.println("bean已经加载");
-//      return;
-//    }
-    Set<Class<?>> classSet = ClassUtil.getPackageClass(basePackage);
-    classSet.stream()
-        .filter(clz -> {
-          for (Class<? extends Annotation> annotation : BEAN_ANNOTATION) {
-            if (clz.isAnnotationPresent(annotation)) {
-              return true;
+  public void loadBeans() {
+
+    String[] basePackages = {"com.server.allservice", "com.together","com.controller"};
+    for (String basePackage : basePackages) {
+      Set<Class<?>> classSet = ClassUtil.getPackageClass(basePackage);
+      classSet.stream()
+          .filter(clz -> {
+            for (Class<? extends Annotation> annotation : BEAN_ANNOTATION) {
+              if (clz.isAnnotationPresent(annotation)) {
+                return true;
+              }
             }
-          }
-          return false;
-        })
-        .forEach(clz -> beanMap.put(clz, ClassUtil.newInstance(clz)));
-    //isLoadBean = true;
+            return false;
+          })
+          .forEach(clz -> beanMap.put(clz, ClassUtil.newInstance(clz)));
+
+    }
   }
 
-  /**
-   * 是否加载Bean
-   */
-  public boolean isLoadBean() {
-    return isLoadBean;
-  }
+
+
+
 
   /**
    * 获得bean实例

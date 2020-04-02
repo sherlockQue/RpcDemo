@@ -3,8 +3,10 @@ package com.server;
 import com.registry.Center;
 
 import com.server.ioc.config.Ioc;
+import com.server.ioc.config.annotation.InterService;
 import com.server.ioc.config.annotation.Service;
 import com.server.ioc.core.BeanContainer;
+import common.util.ClassUtil;
 import common.util.Serializer.JsonSerializer;
 import common.util.codec.RpcDecoder;
 import common.util.codec.RpcEncoder;
@@ -17,6 +19,7 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -29,15 +32,12 @@ import java.util.Set;
  */
 public class NettyServer implements Server {
 
-  private int port;
-  private String host;
-  private Center center;
 
+  private String address;
 
-  public NettyServer(int port, String host, Center center) {
-    this.port = port;
-    this.host = host;
-    this.center = center;
+  public NettyServer(String address) {
+    this.address = address;
+
   }
 
   /**
@@ -74,50 +74,60 @@ public class NettyServer implements Server {
           //开启心跳包活机制，就是客户端、服务端建立连接处于ESTABLISHED状态，超过2小时没有交流，机制会被启动
           .childOption(ChannelOption.SO_KEEPALIVE, Boolean.TRUE);
 
-      ChannelFuture channelFuture = b.bind(host, port).sync();
-      //注册地址
+      String[] addr = address.split(":");
 
-      if (center != null) {
-        for (String interfaceName : handleMap.keySet()) {
-
-          center.register(interfaceName, host+":"+port);
-
-        }
-
+      ChannelFuture channelFuture = b.bind(addr[0], Integer.valueOf(addr[1])).sync();
+      if (channelFuture.isSuccess()) {
+        System.out.println("server success[" + address + "]");
       }
-
-      channelFuture.channel().closeFuture().sync();
     } catch (InterruptedException e) {
+      System.out.println("启动失败");
     }
   }
 
   /**
    * 加载bean
    */
-  @Override
-  public void startIoc() {
-    BeanContainer beanContainer = BeanContainer.getInstance();
-    beanContainer.loadBeans("com.server.allservice");
-    beanContainer.loadBeans("com.server.proxy");
-    System.out.println("bean加载成功");
-    new Ioc().doIoc();
+//  public void startIoc() {
+//    BeanContainer beanContainer = BeanContainer.getInstance();
+//    beanContainer.loadBeans();
+//    System.out.println("bean加载成功");
+//    new Ioc().doIoc();
+//
+//    Set set = beanContainer.getClassesByAnnotation(Service.class);
+//    if (!set.isEmpty()) {
+//      Iterator it = set.iterator();
+//      while (it.hasNext()) {
+//
+//        Object o = (((Class<?>) it.next()).getGenericInterfaces())[0];
+//        String interfaceName = ((Class) o).getName();
+//        Set s = beanContainer.getClassesBySuper((Class) o);
+//        Iterator i = s.iterator();
+//        while (i.hasNext()) {
+//          Object im = i.next();
+//          handleMap.put(interfaceName, im);
+//
+//        }
+//      }
+//    }
+//
+//  }
 
-    Set set = beanContainer.getClassesByAnnotation(Service.class);
-    if (!set.isEmpty()) {
-      Iterator it = set.iterator();
-      while (it.hasNext()) {
+  /**
+   * 发现服务
+   */
+  public List<String> searchService() {
 
-        Object o = (((Class<?>) it.next()).getGenericInterfaces())[0];
-        String interfaceName = ((Class) o).getName();
-        Set s = beanContainer.getClassesBySuper((Class) o);
-        Iterator i = s.iterator();
-        while (i.hasNext()) {
-          Object im = i.next();
-          handleMap.put(interfaceName, im);
+    List<String> interfaceNames = new ArrayList<>();
+    Set<Class<?>> classSet = ClassUtil.getPackageClass("com.comon.service");
 
-        }
+    Iterator it = classSet.iterator();
+    while (it.hasNext()) {
+      Class clazz = (Class) it.next();
+      if (clazz.isAnnotationPresent(InterService.class)) {
+        interfaceNames.add(clazz.getName());
       }
     }
-
+    return interfaceNames;
   }
 }

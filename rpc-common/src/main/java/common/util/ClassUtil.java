@@ -1,4 +1,4 @@
-package com.server.ioc;
+package common.util;
 
 import java.io.File;
 import java.io.IOException;

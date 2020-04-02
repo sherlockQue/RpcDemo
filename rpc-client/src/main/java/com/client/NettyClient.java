@@ -27,93 +27,68 @@ import java.util.Map;
  */
 public class NettyClient implements Client {
 
-    private String addressName;
-    private NettyClientHandle nettyClientHandle;
-    private ShareData shareData;
-    private Class<?> interfaceclass;
-    private Channel channel;
+  private String addressName;
+  private NettyClientHandle nettyClientHandle;
+  private ShareData shareData;
+  private Channel channel;
 
-    public NettyClient(String addressName, Class<?> interfaceclass) {
-
-        this.addressName = addressName;
-        this.interfaceclass = interfaceclass;
-
-        try {
-            connect();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+  /**
+   * 有注册中心
+   * @param addressName 要连接的服务端地址
+   * @param shareData 数据共享
+   */
+  public NettyClient(String addressName, ShareData shareData) {
+    this.addressName = addressName;
+    this.shareData = shareData;
+    try {
+      connect();
+    } catch (InterruptedException e) {
+      System.out.println("连接服务端失败，addr："+addressName);
     }
 
-    public NettyClient(String addressName) {
-        this.addressName = addressName;
-        try {
-            connect();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+  }
 
+  @Override
+  public void connect() throws InterruptedException {
+
+    if (shareData == null) {
+      shareData = new ShareData();
     }
+    nettyClientHandle = new NettyClientHandle(shareData);
+    EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
+    Bootstrap bootstrap = new Bootstrap();
+    bootstrap.group(eventLoopGroup)
+        .channel(NioSocketChannel.class)
+        .handler(new ChannelInitializer<Channel>() {
 
-    public void connect() throws InterruptedException {
+          @Override
+          protected void initChannel(Channel arg0) throws Exception {
+            ChannelPipeline pipeline = arg0.pipeline();
+            pipeline.addLast(new RpcEncoder(RpcRequest.class, new JsonSerializer()));
+            pipeline.addLast(new RpcDecoder(RpcResponse.class, new JsonSerializer()));
+            pipeline.addLast(nettyClientHandle);
+          }
+        });
 
-        shareData = new ShareData();
-        nettyClientHandle = new NettyClientHandle(shareData);
-        EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
-        Bootstrap bootstrap = new Bootstrap();
-        bootstrap.group(eventLoopGroup)
-                .channel(NioSocketChannel.class)
-                .handler(new ChannelInitializer<Channel>() {
+    String[] po = addressName.split(":");
+    channel = bootstrap.connect(po[0], Integer.valueOf(po[1])).sync().channel();
 
-                    @Override
-                    protected void initChannel(Channel arg0) throws Exception {
-                        ChannelPipeline pipeline = arg0.pipeline();
-                        pipeline.addLast(new RpcEncoder(RpcRequest.class, new JsonSerializer()));
-                        pipeline.addLast(new RpcDecoder(RpcResponse.class, new JsonSerializer()));
-                        pipeline.addLast(nettyClientHandle);
-                    }
-                });
+  }
+  /**
+   * 发送信息
+   */
+  public Object send(RpcRequest rpcRequest) {
 
-        String[] po = addressName.split(":");
-        channel = bootstrap.connect(po[0], Integer.valueOf(po[1])).sync().channel();
-
-
+    channel.writeAndFlush(rpcRequest);
+    // 因异步调用，阻塞，直到拿到值
+    for (; ; ) {
+      if (shareData.getRpcResponse(rpcRequest.getRequestId()) != null) {
+        break;
+      }
     }
+    return shareData.getRpcResponse(rpcRequest.getRequestId()).getResult();
+  }
 
-    /**
-     * 反射调用方法，无注册中心
-     * @return
-     */
-    @Override
-    public Object send() {
-        System.out.println(interfaceclass);
-        return Proxy.newProxyInstance(interfaceclass.getClassLoader(), new Class[]{interfaceclass}, new ClientProxy(channel, shareData));
-
-    }
-
-    /**
-     *  反射调用方法，有注册中心
-     * @param interfaceName
-     * @return
-     */
-    public Object send(String interfaceName) {
-
-        try {
-            if (interfaceName != null && interfaceName != "") {
-
-                System.out.println("serverInterface: "+interfaceName);
-                Class<?> clazz = Class.forName(interfaceName);
-                return Proxy
-                    .newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, new ClientProxy(channel, shareData));
-
-            }
-            } catch(ClassNotFoundException e){
-            System.out.println("error：ClassNotFoundException，没有该服务接口");
-                e.printStackTrace();
-            }
-
-        return null;
-    }
 
 
 }

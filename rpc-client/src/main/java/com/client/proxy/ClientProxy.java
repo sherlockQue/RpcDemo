@@ -1,34 +1,41 @@
 package com.client.proxy;
-
+import com.client.centerproxy.CenterClientProxy;
+import com.client.ioc.config.annotation.Autowired;
+import com.client.ioc.core.BeanContainer;
 import common.util.protocol.RpcRequest;
 import common.util.sharedata.ShareData;
-import io.netty.channel.Channel;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.Random;
 
 /**
- * @author fsq Client动态代理
+ *
+ * @author fsq
  */
+
 public class ClientProxy implements InvocationHandler {
 
-  private Channel channel;
+
   /**
    * 记录服务器返回的信息，达到信息同步
    */
   private ShareData shareData;
 
-  public ClientProxy(Channel channel, ShareData shareData) {
-    this.channel = channel;
+  public ClientProxy( ShareData shareData) {
+
     this.shareData = shareData;
   }
 
+  public ClientProxy(){
+    shareData = new ShareData();
+  }
   /**
    * ,获取调用方法的形参，参数类型，方法名
    */
   @Override
-  public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+  public Object invoke(Object proxy, Method method, Object[] args)   {
 
+    //rpcRequest 赋值
     RpcRequest rpcRequest = new RpcRequest();
     rpcRequest.setMethodName(method.getName());
     rpcRequest.setClassName(method.getDeclaringClass().getName());
@@ -36,15 +43,8 @@ public class ClientProxy implements InvocationHandler {
     rpcRequest.setParameterTypes(method.getParameterTypes());
     rpcRequest.setRequestId("1000" + new Random().nextInt(1000));
 
-    channel.writeAndFlush(rpcRequest);
-    for (; ; ) {
-      if (shareData.getRpcResponse(rpcRequest.getRequestId()) != null) {
-        break;
-      }
-    }
+    CenterClientProxy centerClientProxy = (CenterClientProxy)BeanContainer.getInstance().getBean(CenterClientProxy.class);
 
-    Object a = shareData.getRpcResponse(rpcRequest.getRequestId()).getResult();
-
-    return a;
+    return centerClientProxy.invoke(rpcRequest.getClassName(),rpcRequest,shareData);
   }
 }
